@@ -32,8 +32,6 @@ namespace PréfacturationWiilog
                 //Extraction du modèle depuis une ressource.
                 cheminmodeleprefacexcel = Directory.GetCurrentDirectory() + "\\Doc\\" + "2020-01 PREFAC - modele.xls";
 
-
-
                 using (FolderBrowserDialog openBrowserDialog = new FolderBrowserDialog())
                 {
                     openBrowserDialog.Description = "Sélectionnez le répertoire de génération des préfacs";
@@ -55,7 +53,7 @@ namespace PréfacturationWiilog
                 Excel.Worksheet excelWorksheet = (Excel.Worksheet)excelWorkbook.Sheets["Feuil1"];
 
                 //Boucle création des pre factures
-                //on commence par les abonnements
+                //on commence par les abonnements/comptes
                 DBConnect.DbConnection();
                 List<ENT_Comptes> listeComptes = DAL_Comptes.GetAllComptes(DBConnect.dbconn);
 
@@ -69,14 +67,15 @@ namespace PréfacturationWiilog
                     excelApp.ActiveWorkbook.SaveAs(Path.Combine(Path.GetDirectoryName(chemindestinationprefac), annee + "-" + mmmoisselectionne + " - " + entcompt.Filiale + " - " + entcompt.Nomclient + ".xlsx"), Excel.XlFileFormat.xlWorkbookDefault);
 
                 }
-               
+
                 //on fait maintenant la facturation des CP
                 //boucle dans les sites distincts
-                if (GestionCSVActivite.listeClient != null)
+                //GestionCSVActivite.ListeClientDistinct();
+                if (listeComptes != null)
                 {
                     for (int i = 0; i < GestionCSVActivite.listeClient.Length; i++)
                     {
-                        //MessageBox.Show("je suis ici " + GestionCSVActivite.listeClient[i]);
+                        MessageBox.Show("je suis ici " + GestionCSVActivite.listeClient[i]);
                         float totalgtht = 0;
                         //Boucle sur les utilisateurs
                         for (int y = 0; y < GestionCSVActivite.listeUtilisateur.Length; y++)

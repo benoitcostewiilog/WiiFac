@@ -68,7 +68,6 @@ namespace PréfacturationWiilog
             //initialisation de la db 
             DBConnect.DbConnection();
 
-            
             //Variables de sélection du mois en cours
             int monthcombo = comboBox1.SelectedIndex + 1;
             int yearcombo = Int32.Parse(comboBox3.Text);
@@ -110,41 +109,48 @@ namespace PréfacturationWiilog
                         //MessageBox.Show(fields[0]);
                         if (fields[0] != "Date")
                         {
-
-                            DateTime madate = DateTime.ParseExact(fields[0], "dd/MM/yy", CultureInfo.InvariantCulture);
-                            if (madate.Month == DateSelectionnee.Month & DateSelectionnee.Year == 2020)
+                            try
                             {
-                                //MessageBox.Show("on est dans la date ! " + fields[0]);
-                                //on ajoute la ligne dans notre activitecsv
-                                ENT_Activites monActivite = new ENT_Activites();
-                                monActivite.Dateact = DateTime.ParseExact(fields[0], "dd/MM/yy", null);
-                                monActivite.Temps = float.Parse(fields[1], CultureInfo.InvariantCulture.NumberFormat);
-                                monActivite.Tache = fields[2];
-                                monActivite.Nomutilisateur = fields[3];
-                                monActivite.Projet = fields[4];
+                                DateTime madate = DateTime.ParseExact(fields[0], "dd/MM/yy", CultureInfo.InvariantCulture);
+                                if (madate.Month == DateSelectionnee.Month & DateSelectionnee.Year == 2020)
+                                {
+                                    MessageBox.Show("on est dans la date ! " + fields[0]);
+                                    //on ajoute la ligne dans notre activitecsv
+                                    ENT_Activites monActivite = new ENT_Activites();
+                                    monActivite.Dateact = DateTime.ParseExact(fields[0], "dd/MM/yy", null);
+                                    monActivite.Temps = float.Parse(fields[1], CultureInfo.InvariantCulture.NumberFormat);
+                                    monActivite.Tache = fields[2];
+                                    monActivite.Nomutilisateur = fields[3];
+                                    monActivite.Projet = fields[4];
 
-                                //récupération du compte
-                                ENT_Comptes Moncompte= DAL_Comptes.GetOneComptesByFiliale(DBConnect.dbconn, fields[7]);
-                                if (Moncompte.Id > 0)
-                                {
-                                    //on affecte le compte à l'activité
-                                    monActivite.ENT_ComptesId = Moncompte.Id;
-                                    monActivite.ENT_Comptes = Moncompte;
-                                    //MessageBox.Show(Moncompte.Id.ToString());
-                                }
-                                else
-                                {
-                                    //on créé le compte
-                                    ENT_Comptes Moncompte2 = new ENT_Comptes();
-                                    Moncompte2.Filiale = fields[7];
-                                    DAL_Comptes.CreateComptes(DBConnect.dbconn, Moncompte2);
-                                    //on affecte le compte à l'activité
-                                    monActivite.ENT_Comptes = Moncompte2;
-                                    monActivite.ENT_ComptesId = Moncompte2.Id;
-                                }
+                                    //récupération du compte
+                                    ENT_Comptes Moncompte= DAL_Comptes.GetOneComptesByFiliale(DBConnect.dbconn, fields[7]);
+                                    if (Moncompte.Id > 0)
+                                    {
+                                        //on affecte le compte à l'activité
+                                        monActivite.ENT_ComptesId = Moncompte.Id;
+                                        monActivite.ENT_Comptes = Moncompte;
+                                        //MessageBox.Show(Moncompte.Id.ToString());
+                                    }
+                                    else
+                                    {
+                                        //on créé le compte
+                                        ENT_Comptes Moncompte2 = new ENT_Comptes();
+                                        Moncompte2.Filiale = fields[7];
+                                        DAL_Comptes.CreateComptes(DBConnect.dbconn, Moncompte2);
+                                        //on affecte le compte à l'activité
+                                        monActivite.ENT_Comptes = Moncompte2;
+                                        monActivite.ENT_ComptesId = Moncompte2.Id;
+                                    }
                                 
-                                //on ajout l'activité à la liste d'activite
-                                activiteCollection.Add(monActivite);
+                                    //on ajout l'activité à la liste d'activite
+                                    activiteCollection.Add(monActivite);
+                                }
+                            }
+                            catch(FormatException)
+                            {
+                                Console.WriteLine("{0} n'est pas dans le format dd/MM/yy", fields[0]);
+
                             }
                         }
                     }

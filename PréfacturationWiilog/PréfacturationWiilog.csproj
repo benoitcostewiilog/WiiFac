@@ -127,9 +127,11 @@
     <Compile Include="DAL\DBConnect.cs" />
     <Compile Include="Entities\ENT-Company.cs" />
     <Compile Include="Entities\ENT-Comptes.cs" />
+    <Compile Include="Entities\ENT-OrderH.cs" />
     <Compile Include="Entities\ENT_Activites.cs" />
     <Compile Include="Entities\ENT_Factures.cs" />
     <Compile Include="Entities\ENT_LigneFactures.cs" />
+    <Compile Include="Entities\ENT_OrderL.cs" />
     <Compile Include="GestionINIParam.cs" />
     <Compile Include="GestionPrefac.cs" />
     <Compile Include="ParamForm.cs">

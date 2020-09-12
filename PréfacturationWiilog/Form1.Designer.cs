@@ -73,14 +73,14 @@
             this.Email,
             this.Modifier});
             this.dataGridView1.DataSource = this.eNTComptesBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(11, 101);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView1.Location = new System.Drawing.Point(15, 124);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(786, 311);
+            this.dataGridView1.Size = new System.Drawing.Size(1048, 383);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
             // 
@@ -155,10 +155,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(592, 52);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button2.Location = new System.Drawing.Point(789, 64);
+            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 27);
+            this.button2.Size = new System.Drawing.Size(133, 33);
             this.button2.TabIndex = 3;
             this.button2.Text = "Générer factures";
             this.button2.UseVisualStyleBackColor = true;
@@ -167,10 +167,9 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 38);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(12, 47);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 13);
+            this.label2.Size = new System.Drawing.Size(119, 17);
             this.label2.TabIndex = 6;
             this.label2.Text = "Sélection du mois";
             // 
@@ -181,8 +180,8 @@
             this.actionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(808, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1077, 28);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -192,49 +191,48 @@
             this.sélectionnerLeFichierDactivitéToolStripMenuItem,
             this.paramétrageToolStripMenuItem});
             this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
-            this.actionsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.actionsToolStripMenuItem.Size = new System.Drawing.Size(72, 24);
             this.actionsToolStripMenuItem.Text = "Actions";
             // 
             // sélectionnerLeFichierDactivitéToolStripMenuItem
             // 
             this.sélectionnerLeFichierDactivitéToolStripMenuItem.Name = "sélectionnerLeFichierDactivitéToolStripMenuItem";
-            this.sélectionnerLeFichierDactivitéToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.sélectionnerLeFichierDactivitéToolStripMenuItem.Size = new System.Drawing.Size(305, 26);
             this.sélectionnerLeFichierDactivitéToolStripMenuItem.Text = "Importer le fichier d\'activité CSV";
             this.sélectionnerLeFichierDactivitéToolStripMenuItem.Click += new System.EventHandler(this.SélectionnerLeFichierDactivitéToolStripMenuItem_Click);
             // 
             // paramétrageToolStripMenuItem
             // 
             this.paramétrageToolStripMenuItem.Name = "paramétrageToolStripMenuItem";
-            this.paramétrageToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.paramétrageToolStripMenuItem.Size = new System.Drawing.Size(305, 26);
             this.paramétrageToolStripMenuItem.Text = "Paramétrage";
             this.paramétrageToolStripMenuItem.Click += new System.EventHandler(this.paramétrageToolStripMenuItem_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 84);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(12, 103);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(116, 13);
+            this.label1.Size = new System.Drawing.Size(124, 17);
             this.label1.TabIndex = 9;
-            this.label1.Text = "Liste des abonnements";
+            this.label1.Text = "Liste des Comptes";
             // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(13, 52);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBox1.Location = new System.Drawing.Point(17, 64);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(138, 21);
+            this.comboBox1.Size = new System.Drawing.Size(183, 24);
             this.comboBox1.TabIndex = 16;
             // 
             // comboBox3
             // 
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(154, 52);
-            this.comboBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBox3.Location = new System.Drawing.Point(205, 64);
+            this.comboBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(62, 21);
+            this.comboBox3.Size = new System.Drawing.Size(81, 24);
             this.comboBox3.TabIndex = 23;
             // 
             // statusStrip1
@@ -242,9 +240,10 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 427);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 531);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(808, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1077, 22);
             this.statusStrip1.TabIndex = 27;
             this.statusStrip1.Text = "statusStrip1";
             this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
@@ -252,13 +251,14 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 16);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(697, 52);
+            this.button1.Location = new System.Drawing.Point(929, 64);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(99, 27);
+            this.button1.Size = new System.Drawing.Size(132, 33);
             this.button1.TabIndex = 28;
             this.button1.Text = "Créer compte";
             this.button1.UseVisualStyleBackColor = true;
@@ -266,9 +266,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(808, 449);
+            this.ClientSize = new System.Drawing.Size(1077, 553);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.comboBox3);
@@ -280,7 +280,7 @@
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Préfacturation Wiilog";
             this.Load += new System.EventHandler(this.Form1_Load);
