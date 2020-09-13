@@ -1,12 +1,11 @@
-﻿using System;
+﻿using PréfacturationWiilog.DAL;
+using PréfacturationWiilog.Entities;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -52,85 +51,99 @@ namespace PréfacturationWiilog
                 Excel.Workbook excelWorkbook = excelApp.Workbooks.Open(cheminmodeleprefacexcel);
                 Excel.Worksheet excelWorksheet = (Excel.Worksheet)excelWorkbook.Sheets["Feuil1"];
 
-                //Boucle création des pre factures
-                //on commence par les abonnements/comptes
+                //récupération des comptes dans la méthode
                 DBConnect.DbConnection();
                 List<ENT_Comptes> listeComptes = DAL_Comptes.GetAllComptes(DBConnect.dbconn);
 
+                //récupération des actités dans la méthode
+                List<ENT_Activites> ListeActivites = DAL_Activites.GetAllActivites(DBConnect.dbconn);
+
+                //récupération des nom utilisateur distinct
+                List<ENT_Activites> ListeUtilisateurs = DAL_Activites.SelectDistinctUserofActivites(DBConnect.dbconn);
+                //Boucle création des pre factures
+                //on commence par les abonnements/comptes
                 foreach (ENT_Comptes entcompt in listeComptes)
                 {
-                    excelWorksheet.Cells[14, 6] = entcompt.Filiale + " - " + entcompt.Nomclient;
-                    excelWorksheet.Cells[15, 1] = "Contact : " + entcompt.Nomclient;
+                    float totalgtht = 0;
+                    
+                    excelWorksheet.Cells[14, 6] = entcompt.Filiale;
+                    if (entcompt.Nomclient != null)
+                    {
+                        excelWorksheet.Cells[15, 1] = "Contact : " + entcompt.Nomclient;
+                    }
+                    //Ajout des lignes pour Montant Mensuel
+
                     excelWorksheet.Cells[29, 7] = entcompt.Montantmensuel;
                     excelWorksheet.Cells[29, 10] = entcompt.Montantmensuel;
                     excelWorksheet.Cells[49, 10] = entcompt.Montantmensuel;
-                    excelApp.ActiveWorkbook.SaveAs(Path.Combine(Path.GetDirectoryName(chemindestinationprefac), annee + "-" + mmmoisselectionne + " - " + entcompt.Filiale + " - " + entcompt.Nomclient + ".xlsx"), Excel.XlFileFormat.xlWorkbookDefault);
+                    
+                    totalgtht += entcompt.Montantmensuel;
+                    //excelApp.ActiveWorkbook.SaveAs(Path.Combine(Path.GetDirectoryName(chemindestinationprefac), annee + "-" + mmmoisselectionne + " - " + entcompt.Filiale + ".xlsx"), Excel.XlFileFormat.xlWorkbookDefault);
 
-                }
+                    int y = 1;
 
-                //on fait maintenant la facturation des CP
-                //boucle dans les sites distincts
-                //GestionCSVActivite.ListeClientDistinct();
-                if (listeComptes != null)
-                {
-                    for (int i = 0; i < GestionCSVActivite.listeClient.Length; i++)
+                    //boucle dans les utilisateurs distinct d'activite
+                    foreach (ENT_Activites ActNomutilisateur in ListeUtilisateurs)
                     {
-                        MessageBox.Show("je suis ici " + GestionCSVActivite.listeClient[i]);
-                        float totalgtht = 0;
+
+                        //MessageBox.Show("je suis ici " + ActNomutilisateur.Nomutilisateur);
                         //Boucle sur les utilisateurs
-                        for (int y = 0; y < GestionCSVActivite.listeUtilisateur.Length; y++)
+                        /* for (int y = 0; y < GestionCSVActivite.listeUtilisateur.Length; y++)
+                         {
+                             */
+                        float compteurtemps = 0;
+                        float tauxjournalier = 0;
+                        float totalhtparutilisateur = 0;
+
+                        switch (ActNomutilisateur.Nomutilisateur)
                         {
+                            case "Lepain":
+                                Console.WriteLine("Lepain");
+                                tauxjournalier = 60;
+                                //Console.WriteLine("Case 1");
+                                break;
+                            case "Coste":
+                                Console.WriteLine("Coste");
+                                tauxjournalier = 55;
+                                //Console.WriteLine("Case 2");
+                                break;
+                            case "Boumahrou":
+                                Console.WriteLine("Boumahrou");
+                                tauxjournalier = 50;
+                                break;
+                            default:
+                                //Console.WriteLine("Default case");
+                                break;
+                        }
 
-                            float compteurtemps = 0;
-                            float tauxjournalier = 0;
-                            float totalhtparutilisateur = 0;
-                            switch (GestionCSVActivite.listeUtilisateur[y])
+                        //boucle dans les activités
+                        foreach (ENT_Activites Activite in ListeActivites)
+                        {
+                            if (ActNomutilisateur.Nomutilisateur == Activite.Nomutilisateur & entcompt.Id == Activite.ENT_ComptesId)
                             {
-                                case "Lepain":
-                                    tauxjournalier = 60;
-                                    //Console.WriteLine("Case 1");
-                                    break;
-                                case "Coste":
-                                    tauxjournalier = 55;
-                                    //Console.WriteLine("Case 2");
-                                    break;
-                                case "Boumahrou":
-                                    tauxjournalier = 50;
-                                    break;
-                                default:
-                                    //Console.WriteLine("Default case");
-                                    break;
-                            }
+                                Console.WriteLine("Compteur de temps : " + compteurtemps);
+                                compteurtemps += Activite.Temps;
 
-                            //boucle dans les activités
-                            foreach (strActivite stra in GestionCSVActivite.listeActivite)
-                            {
-                                if (stra.nomdUtilisateur == GestionCSVActivite.listeUtilisateur[y] & stra.site == GestionCSVActivite.listeClient[i])
-                                {
-                                    compteurtemps += stra.temps;
-                                }
                             }
-                            totalhtparutilisateur = compteurtemps * tauxjournalier;
-                            totalgtht += totalhtparutilisateur;
-                            excelWorksheet.Cells[29 + y, 2] = "Gestion de projet - " + GestionCSVActivite.listeUtilisateur[y];
-                            excelWorksheet.Cells[29 + y, 7] = totalhtparutilisateur;
-                            excelWorksheet.Cells[29 + y, 10] = totalhtparutilisateur;
 
                         }
-                        excelWorksheet.Cells[14, 6] = GestionCSVActivite.listeClient[i];
-                        excelWorksheet.Cells[15, 1] = "Contact : " + GestionCSVActivite.listeClient[i];
-                        excelWorksheet.Cells[49, 10] = totalgtht;
-                        excelWorksheet.Cells[24, 2] = "Gestion de projet du mois de " + mois + " pour : " + GestionCSVActivite.listeClient[i];
-                        excelApp.ActiveWorkbook.SaveAs(Path.Combine(Path.GetDirectoryName(chemindestinationprefac), annee + "-" + mmmoisselectionne + " - " + GestionCSVActivite.listeClient[i] + ".xlsx"), Excel.XlFileFormat.xlWorkbookDefault);
-
+                        totalhtparutilisateur = compteurtemps * tauxjournalier;
+                        totalgtht += totalhtparutilisateur;
+                        excelWorksheet.Cells[29 + y, 2] = "Gestion de projet - " + ActNomutilisateur.Nomutilisateur;
+                        excelWorksheet.Cells[29 + y, 7] = totalhtparutilisateur;
+                        excelWorksheet.Cells[29 + y, 10] = totalhtparutilisateur;
+                        y++;
                     }
-                }
+                    Console.WriteLine("le totalht est : " + totalgtht);
+                    excelWorksheet.Cells[14, 6] = entcompt.Filiale;
+                    excelWorksheet.Cells[15, 1] = "Contact : " + entcompt.Contact;
+                    excelWorksheet.Cells[49, 10] = totalgtht;
+                    //excelWorksheet.Cells[49, 10] = "et oui mon petit";
+                    excelWorksheet.Cells[24, 2] = "Gestion de projet du mois de " + mois + " pour : " + entcompt.Nomclient;
+                    excelApp.ActiveWorkbook.SaveAs(Path.Combine(Path.GetDirectoryName(chemindestinationprefac), annee + "-" + mmmoisselectionne + " - " + entcompt.Filiale + ".xlsx"), Excel.XlFileFormat.xlWorkbookDefault);
 
-
-
-
-                //fin boucle création des préfactures
-
+                    Console.WriteLine("fin du fichier excel");
+                }//fin de foreach liste comptes
                 excelWorkbook.Close();
                 excelApp.Quit();
             }

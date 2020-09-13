@@ -20,5 +20,13 @@ namespace PréfacturationWiilog.DAL
         {
             db.DeleteAll<ENT_Activites>();
         }
+        public static List<ENT_Activites> SelectDistinctUserofActivites(SQLiteConnection db)
+        {
+            return db.Query<ENT_Activites>("SELECT DISTINCT Nomutilisateur FROM ENT_Activites");
+        }
+        public static List<ENT_Activites> GetAllActivites(SQLiteConnection db)
+        {
+            return db.Query<ENT_Activites>("SELECT * FROM ENT_Activites");
+        }
     }
 }

@@ -24,6 +24,7 @@ namespace PréfacturationWiilog
             textBox3.Text = GestionINIParam.Motdepasse;
             textBox4.Text = GestionINIParam.Expediteur;
             textBox5.Text = GestionINIParam.Destinataireprefac;
+            checkBox1.Checked = GestionINIParam.Envoiemailprefac;
             set_Port(GestionINIParam.Port);
             set_Protocol(GestionINIParam.Protocol);
             
@@ -49,6 +50,7 @@ namespace PréfacturationWiilog
             GestionINIParam.Destinataireprefac = textBox5.Text;
             GestionINIParam.Port = port;
             GestionINIParam.Protocol = protocol;
+            GestionINIParam.Envoiemailprefac = checkBox1.Checked;
             GestionINIParam.SetIniParam();
             //On ferme la fenêtre
             this.Close();
@@ -123,6 +125,11 @@ namespace PréfacturationWiilog
         private void radioButton5_CheckedChanged(object sender, EventArgs e)
         {
             select_protocol("TLS");
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

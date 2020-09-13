@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +19,7 @@ namespace PréfacturationWiilog
         public static string Protocol { get; set; }
         public static string Expediteur { get; set; }
         public static string Destinataireprefac { get; set; }
+        public static bool  Envoiemailprefac { get; set; }
         public static void GetIniParam()
         {
             if (File.Exists("Configuration.ini"))
@@ -32,6 +34,14 @@ namespace PréfacturationWiilog
                 Protocol = data["Param Mail"]["protocol"];
                 Expediteur = data["Param Mail"]["expediteur"];
                 Destinataireprefac = data["Param Mail"]["destinataireprefac"];
+                if (data["Param Mail"]["envoiemailprefac"] != null)
+                {
+                Envoiemailprefac = bool.Parse(data["Param Mail"]["envoiemailprefac"]);
+                }
+                else
+                {
+                    Envoiemailprefac = true;
+                }
             }
         }
         public static void SetIniParam()
@@ -46,6 +56,8 @@ namespace PréfacturationWiilog
             data["Param Mail"]["port"] = Port;
             data["Param Mail"]["protocol"] = Protocol;
             data["Param Mail"]["expediteur"] = Expediteur;
+            data["Param Mail"]["envoiemailprefac"] = Envoiemailprefac.ToString();
+
             parser.WriteFile("Configuration.ini", data);
 
         }

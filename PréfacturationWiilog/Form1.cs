@@ -51,7 +51,11 @@ namespace PréfacturationWiilog
             toolStripStatusLabel1.Text = "Génération des préfacs en cours...";
             toolStripStatusLabel1.Text = GestionPrefac.GenererPrefac(comboBox3.Text, comboBox1.Text, comboBox1.SelectedIndex + 1);
             toolStripStatusLabel1.Text = GestionPrefac.ZipPrefac(comboBox1.Text, comboBox3.Text);
+            if (GestionINIParam.Envoiemailprefac)
+            {
             toolStripStatusLabel1.Text = GestionPrefac.EnvoiParMail(comboBox1.Text, comboBox3.Text, "coste.benoit@gmail.com");
+
+            }
 
 
         }
@@ -63,6 +67,7 @@ namespace PréfacturationWiilog
 
         }
 
+        //Bouton Importer fichier csv
         private void SélectionnerLeFichierDactivitéToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //initialisation de la db 
@@ -114,7 +119,7 @@ namespace PréfacturationWiilog
                                 DateTime madate = DateTime.ParseExact(fields[0], "dd/MM/yy", CultureInfo.InvariantCulture);
                                 if (madate.Month == DateSelectionnee.Month & DateSelectionnee.Year == 2020)
                                 {
-                                    MessageBox.Show("on est dans la date ! " + fields[0]);
+                                    //MessageBox.Show("on est dans la date ! " + fields[0]);
                                     //on ajoute la ligne dans notre activitecsv
                                     ENT_Activites monActivite = new ENT_Activites();
                                     monActivite.Dateact = DateTime.ParseExact(fields[0], "dd/MM/yy", null);
@@ -199,10 +204,7 @@ namespace PréfacturationWiilog
             */
         }
 
-        private void Button1_Click_1(object sender, EventArgs e)
-        {
-            GestionCSVActivite.ListeClientDistinct();
-        }
+        
 
         private void Form1_Load(object sender, EventArgs e)
         {
