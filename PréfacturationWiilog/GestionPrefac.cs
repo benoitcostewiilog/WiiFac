@@ -61,7 +61,7 @@ namespace PréfacturationWiilog
                 //récupération des nom utilisateur distinct
                 List<ENT_Activites> ListeUtilisateurs = DAL_Activites.SelectDistinctUserofActivites(DBConnect.dbconn);
                 //Boucle création des pre factures
-                //on commence par les abonnements/comptes
+                //on commence par les montants mensuel et ponctuels
                 foreach (ENT_Comptes entcompt in listeComptes)
                 {
                     float totalgtht = 0;
@@ -73,24 +73,35 @@ namespace PréfacturationWiilog
                     }
                     //Ajout des lignes pour Montant Mensuel
 
+                    excelWorksheet.Cells[29, 2] = entcompt.Descriptionmontantmensuel;
                     excelWorksheet.Cells[29, 7] = entcompt.Montantmensuel;
                     excelWorksheet.Cells[29, 10] = entcompt.Montantmensuel;
-                    excelWorksheet.Cells[49, 10] = entcompt.Montantmensuel;
-                    
+
+                    //ajout des lignes pour montant ponctuel
+                    excelWorksheet.Cells[30, 2] = entcompt.Descriptionmontantponctuel;
+                    excelWorksheet.Cells[30, 7] = entcompt.Montantponctuel;
+                    excelWorksheet.Cells[30, 10] = entcompt.Montantponctuel;
+                    excelWorksheet.Cells[31, 2] = "Prestation de Gestion de projet informatique";
+
+
                     totalgtht += entcompt.Montantmensuel;
+                    totalgtht += entcompt.Montantponctuel;
+
+                    //on supprimer le montant ponctuel du compte
+                    entcompt.Montantponctuel = 0;
+                    entcompt.Descriptionmontantponctuel = "";
+                    DAL_Comptes.UpdateComptes(DBConnect.dbconn, entcompt);
+
                     //excelApp.ActiveWorkbook.SaveAs(Path.Combine(Path.GetDirectoryName(chemindestinationprefac), annee + "-" + mmmoisselectionne + " - " + entcompt.Filiale + ".xlsx"), Excel.XlFileFormat.xlWorkbookDefault);
 
-                    int y = 1;
+                    int y = 2;
 
                     //boucle dans les utilisateurs distinct d'activite
                     foreach (ENT_Activites ActNomutilisateur in ListeUtilisateurs)
                     {
-
                         //MessageBox.Show("je suis ici " + ActNomutilisateur.Nomutilisateur);
                         //Boucle sur les utilisateurs
-                        /* for (int y = 0; y < GestionCSVActivite.listeUtilisateur.Length; y++)
-                         {
-                             */
+
                         float compteurtemps = 0;
                         float tauxjournalier = 0;
                         float totalhtparutilisateur = 0;
@@ -99,23 +110,22 @@ namespace PréfacturationWiilog
                         {
                             case "Lepain":
                                 Console.WriteLine("Lepain");
-                                tauxjournalier = 60;
+                                tauxjournalier = 71;
                                 //Console.WriteLine("Case 1");
                                 break;
                             case "Coste":
                                 Console.WriteLine("Coste");
-                                tauxjournalier = 55;
+                                tauxjournalier = 85;
                                 //Console.WriteLine("Case 2");
                                 break;
                             case "Boumahrou":
                                 Console.WriteLine("Boumahrou");
-                                tauxjournalier = 50;
+                                tauxjournalier = 64;
                                 break;
                             default:
                                 //Console.WriteLine("Default case");
                                 break;
                         }
-
                         //boucle dans les activités
                         foreach (ENT_Activites Activite in ListeActivites)
                         {
@@ -123,15 +133,13 @@ namespace PréfacturationWiilog
                             {
                                 Console.WriteLine("Compteur de temps : " + compteurtemps);
                                 compteurtemps += Activite.Temps;
-
                             }
-
                         }
                         totalhtparutilisateur = compteurtemps * tauxjournalier;
                         totalgtht += totalhtparutilisateur;
-                        excelWorksheet.Cells[29 + y, 2] = "Gestion de projet - " + ActNomutilisateur.Nomutilisateur;
-                        excelWorksheet.Cells[29 + y, 7] = totalhtparutilisateur;
-                        excelWorksheet.Cells[29 + y, 10] = totalhtparutilisateur;
+                        excelWorksheet.Cells[30 + y, 2] = "Gestion de projet - " + ActNomutilisateur.Nomutilisateur;
+                        excelWorksheet.Cells[30 + y, 7] = totalhtparutilisateur;
+                        excelWorksheet.Cells[30 + y, 10] = totalhtparutilisateur;
                         y++;
                     }
                     Console.WriteLine("le totalht est : " + totalgtht);

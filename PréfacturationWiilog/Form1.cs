@@ -117,12 +117,13 @@ namespace PréfacturationWiilog
                             try
                             {
                                 DateTime madate = DateTime.ParseExact(fields[0], "dd/MM/yy", CultureInfo.InvariantCulture);
-                                if (madate.Month == DateSelectionnee.Month & DateSelectionnee.Year == 2020)
+                                if (madate.Month == DateSelectionnee.Month & madate.Year == DateSelectionnee.Year)
                                 {
                                     //MessageBox.Show("on est dans la date ! " + fields[0]);
                                     //on ajoute la ligne dans notre activitecsv
                                     ENT_Activites monActivite = new ENT_Activites();
-                                    monActivite.Dateact = DateTime.ParseExact(fields[0], "dd/MM/yy", null);
+                                    Console.WriteLine(fields[0]);
+                                    monActivite.Dateact = DateTime.ParseExact(fields[0], "dd/MM/yy", CultureInfo.InvariantCulture);
                                     monActivite.Temps = float.Parse(fields[1], CultureInfo.InvariantCulture.NumberFormat);
                                     monActivite.Tache = fields[2];
                                     monActivite.Nomutilisateur = fields[3];
